@@ -3,7 +3,37 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
 
-export default function Home() {
+import { promises as fs } from "fs";
+import path from "path";
+import { taskSchema } from "../data/schema";
+import { columns } from "../components/datatable/columns";
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { DataTable } from "@/components/datatable/data-table";
+import { z } from "zod";
+
+// Simulate a database read for tasks.
+async function getTasks() {
+  const data = await fs.readFile(
+    path.join(process.cwd(), "app/examples/tasks/data/tasks.json")
+  );
+
+  const tasks = JSON.parse(data.toString());
+
+  return z.array(taskSchema).parse(tasks);
+}
+
+export default async function Home() {
+  const tasks = await getTasks();
+
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
       <div className="flex max-w-[980px] flex-col items-start gap-2">
@@ -34,6 +64,8 @@ export default function Home() {
           GitHub
         </Link>
       </div>
+
+      <DataTable data={tasks} columns={columns} />
     </section>
   );
 }
