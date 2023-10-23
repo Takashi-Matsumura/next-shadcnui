@@ -8,23 +8,12 @@ import path from "path";
 import { taskSchema } from "../data/schema";
 import { columns } from "../components/datatable/columns";
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { DataTable } from "@/components/datatable/data-table";
 import { z } from "zod";
 
 // Simulate a database read for tasks.
 async function getTasks() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), "app/examples/tasks/data/tasks.json")
-  );
+  const data = await fs.readFile(path.join(process.cwd(), "data/tasks.json"));
 
   const tasks = JSON.parse(data.toString());
 
