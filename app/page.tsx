@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
+import { Overview } from "@/components/overview";
 
 export default async function Home() {
   return (
@@ -19,6 +20,7 @@ export default async function Home() {
             focus on delivering caring and quality services.
           </p>
         </div>
+        <Overview />
         {/* <div className="flex gap-4">
         <Link
           href={siteConfig.links.docs}
